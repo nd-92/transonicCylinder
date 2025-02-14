@@ -67,14 +67,14 @@ cwipiDsDt           true;
 
 smoothenSources     true;
 
-smoothingScale      100000000.0;
+smoothingScale      1000000.0;
 
 functions
 {
     // #include "timeAverageFields"
     // #include "cutPlanes"
     // #include "boundarySurfaces"
-    // #include "probes"
+    #include "probes"
 }
 
 // ************************************************************************* //
