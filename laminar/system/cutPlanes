@@ -1,0 +1,42 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2212                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+
+cutPlanes
+{
+    type            surfaces;
+
+    libs            (fieldFunctionObjects sampling);
+
+    writeControl    writeTime;
+
+    executeControl  writeTime;
+
+    fields          (U UMean p pMean T TMean rho rhoMean sMean cSqMean LMean L LPrime entropyGradient entropyMonopole);
+
+    surfaceFormat   foam;
+
+    interpolationScheme cellPointFace;
+        
+    surfaces
+    {
+        zNormal
+        {
+            type            cuttingPlane;
+
+            point           (0 0 0);
+
+            normal          (0 0 1);
+
+            interpolate     true;
+
+            surfaceFormat   foam;
+        }
+    }
+}
+
+// ************************************************************************* //

@@ -1,0 +1,98 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2212                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+
+fieldAverage0
+{
+    type            fieldAverage;
+        
+    libs            (fieldFunctionObjects sampling);
+    
+    fields
+    (
+        U
+        {
+            mean          true;
+            
+            prime2Mean    false;
+
+            base          time;
+
+            allowRestart  true;
+        }
+      
+        p
+        {
+            mean          true;
+
+            prime2Mean    false;
+
+            base          time;
+
+            allowRestart  true;
+        }
+            
+        cSq
+        {
+            mean          true;
+
+            prime2Mean    false;
+
+            base          time;
+
+            allowRestart  true;
+        }
+      
+        T
+        {
+            mean          true;
+
+            prime2Mean    false;
+
+            base          time;
+
+            allowRestart  true;
+        }
+      
+        rho
+        {
+            mean          true;
+
+            prime2Mean    false;
+
+            base          time;
+
+            allowRestart  true;
+        }
+      
+        s
+        {
+            mean          true;
+
+            prime2Mean    false;
+
+            base          time;
+
+            allowRestart  true;
+        }
+      
+        L
+        {
+            mean          true;
+
+            prime2Mean    false;
+
+            base          time;
+
+            allowRestart  true;
+        }
+    );
+        
+    writeControl      writeTime;
+}
+
+// ************************************************************************* //

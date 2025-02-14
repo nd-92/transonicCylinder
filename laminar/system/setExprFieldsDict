@@ -1,0 +1,135 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2212                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    arch        "LSB;label=32;scalar=64";
+    class       dictionary;
+    object      setExprFieldsDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+defaultFieldValues
+(
+    volScalarFieldValue acousticDamping 1.0
+    volScalarFieldValue p 100000;
+    volScalarFieldValue T 278.575;
+);
+
+variables_
+{
+    variables
+    (
+        "r = sqrt(sqr(pos().x())+sqr(pos().y()))"
+        "PI = 3.141592653589793238462643383279502884197169399375105820974944592307816406286208998628034825342117068"
+        "s = 0.000015"
+        "rO = 80"
+        "spongeLength = 10"
+        "rO_source = 60"
+        "spongeLength_source = 10"
+    );
+}
+
+expressions
+(
+    acousticDamping
+    {
+        field       acousticDamping;
+
+        create      false;
+
+        expression
+        #{
+            1
+        #};
+    }
+
+    sourceDamping
+    {
+        field       sourceDamping;
+
+        create      false;
+
+        expression
+        #{
+            0
+        #};
+    }
+
+    acousticDampingBlending
+    {
+        field       acousticDamping;
+
+        $variables_;
+
+        fieldMask
+        #{
+            r >= rO * s && r <= (rO + spongeLength) * s
+        #};
+
+        expression
+        #{
+            (sqr(sin((PI*(r - rO*s))/(2*s*spongeLength))))
+        #};
+    }
+
+    acousticDampingInner
+    {
+        field       acousticDamping;
+
+        $variables_;
+
+        fieldMask
+        #{
+            r < rO * s
+        #};
+
+        expression
+        #{
+            0
+        #};
+    }
+
+    sourceDampingBlending
+    {
+        field       sourceDamping;
+
+        $variables_;
+
+        fieldMask
+        #{
+            r >= rO_source * s && r <= (rO_source + spongeLength_source) * s
+        #};
+
+        expression
+        #{
+            1-(sqr(sin((PI*(r - rO_source*s))/(2*s*spongeLength_source))))
+        #};
+    }
+
+    sourceDampingInner
+    {
+        field       sourceDamping;
+
+        $variables_;
+
+        fieldMask
+        #{
+            r < rO_source * s
+        #};
+
+        expression
+        #{
+            1
+        #};
+    }
+
+);
+
+// ************************************************************************* //

@@ -1,0 +1,86 @@
+<NEKTAR>
+    <EXPANSIONS>
+        <E COMPOSITE="C[3]" NUMMODES="5" TYPE="GLL_LAGRANGE_SEM" FIELDS="p" />
+        <E COMPOSITE="C[3]" NUMMODES="5" TYPE="GLL_LAGRANGE_SEM" FIELDS="u" />
+        <E COMPOSITE="C[3]" NUMMODES="5" TYPE="GLL_LAGRANGE_SEM" FIELDS="v" />
+    </EXPANSIONS>
+    <CONDITIONS>
+        <SOLVERINFO>
+            <I PROPERTY="EQType" VALUE="APE" />
+            <I PROPERTY="Projection" VALUE="DisContinuous" />
+            <I PROPERTY="AdvectionType" VALUE="WeakDG" />
+            <I PROPERTY="TimeIntegrationMethod" VALUE="ClassicalRungeKutta4" />
+            <I PROPERTY="UpwindType" VALUE="APELaxFriedrichs" />
+        </SOLVERINFO>
+        <PARAMETERS>
+            <P> TimeStep=7E-12 </P>
+            <P> NumSteps=1000000000 </P>
+            <P> FinTime=TimeStep*NumSteps </P>
+            <P> IO_CheckSteps=100 </P>
+            <P> IO_CFLSteps=1 </P>
+            <P> IO_InfoSteps=1 </P>
+        </PARAMETERS>
+        <VARIABLES>
+            <V ID="0"> p </V>
+            <V ID="1"> u </V>
+            <V ID="2"> v </V>
+        </VARIABLES>
+        <BOUNDARYREGIONS>
+            <B ID="0"> C[1] </B>
+            <B ID="1"> C[2] </B>
+        </BOUNDARYREGIONS>
+        <BOUNDARYCONDITIONS>
+            <!-- Cylinder walls -->
+            <REGION REF="0">
+                <D VAR="p" USERDEFINEDTYPE="Wall" VALUE="0" />
+                <D VAR="u" USERDEFINEDTYPE="Wall" VALUE="0" />
+                <D VAR="v" USERDEFINEDTYPE="Wall" VALUE="0" />
+            </REGION>
+            <!-- External freestream -->
+            <REGION REF="1">
+                <D VAR="p" USERDEFINEDTYPE="RiemannInvariantBC" />
+                <D VAR="u" USERDEFINEDTYPE="RiemannInvariantBC" />
+                <D VAR="v" USERDEFINEDTYPE="RiemannInvariantBC" />
+            </REGION>
+        </BOUNDARYCONDITIONS>
+        <FUNCTION NAME="Baseflow">
+            <F VAR="u0" FILE="BaseFlow/SmoothenedBaseFlow.fld:u0" />
+            <F VAR="v0" FILE="BaseFlow/SmoothenedBaseFlow.fld:v0" />
+            <F VAR="rho0" FILE="BaseFlow/SmoothenedBaseFlow.fld:rho0" />
+            <F VAR="c0sq" FILE="BaseFlow/SmoothenedBaseFlow.fld:c0sq" />
+        </FUNCTION>
+        <FUNCTION NAME="InitialConditions">
+            <E VAR="p" VALUE="0" />
+            <E VAR="u" VALUE="0" />
+            <E VAR="v" VALUE="0" />
+        </FUNCTION>
+        <FUNCTION NAME="CouplingSource">
+            <E VAR="p" VALUE="0" />
+            <E VAR="u" VALUE="0" />
+            <E VAR="v" VALUE="0" />
+        </FUNCTION>
+        <FUNCTION NAME="AbsorptionCoefficient">
+            <F VAR="p" FILE="Absorption/SmoothenedAbsorption.fld:p" />
+            <F VAR="u" FILE="Absorption/SmoothenedAbsorption.fld:u" />
+            <F VAR="v" FILE="Absorption/SmoothenedAbsorption.fld:v" />
+        </FUNCTION>
+    </CONDITIONS>
+    <COUPLING NAME="cpl1" TYPE="Cwipi">
+        <I PROPERTY="RemoteName" VALUE="cwipiFoam" />
+        <I PROPERTY="ReceiveSteps" VALUE="1" />
+        <I PROPERTY="ReceiveVariables" VALUE="F_0_p,F_0_u,F_0_v" />
+        <I PROPERTY="NotLocMethod" VALUE="Keep" />
+        <!--I PROPERTY="FilterWidth" VALUE="0.00000015" /!-->
+        <I PROPERTY="Oversample" VALUE="10" />
+        <I PROPERTY="GeomTol" VALUE="1e-12" />
+    </COUPLING>
+    <FORCING>
+        <FORCE TYPE="Absorption">
+            <COEFF> AbsorptionCoefficient </COEFF>
+        </FORCE>
+        <FORCE TYPE="Field">
+            <FIELDFORCETIMEFCN> 1.0 </FIELDFORCETIMEFCN>
+            <FIELDFORCE> CouplingSource </FIELDFORCE>
+        </FORCE>
+    </FORCING>
+</NEKTAR>

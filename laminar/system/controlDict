@@ -1,0 +1,80 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2212                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+application         buiTurbFoam;
+
+startFrom           latestTime;
+
+startTime           0;
+
+stopAt              endTime;
+
+endTime             0.00056;
+
+deltaT              7e-12;
+
+writeControl        timeStep;
+
+writeInterval       10000;
+
+purgeWrite          3;
+
+writeFormat         binary;
+
+writePrecision      15;
+
+writeCompression    off;
+
+timeFormat          general;
+
+timePrecision       9;
+
+runTimeModifiable   false;
+
+adjustTimeStep      no;
+
+maxCo               1;
+
+maxDeltaT           5e-11;
+
+cwipiSwitch         true;
+
+cwipiAveraging      false;
+
+cwipiDim            2;
+
+cwipiStep           1;
+
+cwipiLambVector     true;
+
+cwipiEntropy        true;
+
+cwipiDsDt           true;
+
+smoothenSources     true;
+
+smoothingScale      100000000.0;
+
+functions
+{
+    // #include "timeAverageFields"
+    // #include "cutPlanes"
+    // #include "boundarySurfaces"
+    // #include "probes"
+}
+
+// ************************************************************************* //

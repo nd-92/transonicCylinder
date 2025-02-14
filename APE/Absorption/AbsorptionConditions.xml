@@ -1,0 +1,35 @@
+<NEKTAR>
+    <EXPANSIONS>
+        <E COMPOSITE="C[3]" NUMMODES="5" TYPE="GLL_LAGRANGE_SEM" FIELDS="p" />
+        <E COMPOSITE="C[3]" NUMMODES="5" TYPE="GLL_LAGRANGE_SEM" FIELDS="u" />
+        <E COMPOSITE="C[3]" NUMMODES="5" TYPE="GLL_LAGRANGE_SEM" FIELDS="v" />
+    </EXPANSIONS>
+    <CONDITIONS>
+        <SOLVERINFO>
+            <I PROPERTY="Projection" VALUE="Continuous" />
+        </SOLVERINFO>
+        <VARIABLES>
+            <V ID="0"> p </V>
+            <V ID="1"> u </V>
+            <V ID="2"> v </V>
+        </VARIABLES>
+        <BOUNDARYREGIONS>
+            <B ID="0"> C[1] </B>
+            <B ID="1"> C[2] </B>
+        </BOUNDARYREGIONS>
+        <BOUNDARYCONDITIONS>
+            <!-- Cylinder walls -->
+            <REGION REF="0">
+                <D VAR="p" VALUE="0" />
+                <D VAR="u" VALUE="0" />
+                <D VAR="v" VALUE="0" />
+            </REGION>
+            <!-- External freestream -->
+            <REGION REF="1">
+                <D VAR="p" VALUE="-5040" />
+                <D VAR="u" VALUE="-(3*554529255^(1/2)*((1247169392722986^(1/2)*(41929*20279^(1/2)*415723130907662^(1/2) + 59411132812500)^(1/2))/2 + 46875*8430449371676477698^(1/2))^(1/2))/66015387500" />
+                <D VAR="v" VALUE="-(3*554529255^(1/2)*((1247169392722986^(1/2)*(41929*20279^(1/2)*415723130907662^(1/2) + 59411132812500)^(1/2))/2 + 46875*8430449371676477698^(1/2))^(1/2))/66015387500" />
+            </REGION>
+        </BOUNDARYCONDITIONS>
+    </CONDITIONS>
+</NEKTAR>

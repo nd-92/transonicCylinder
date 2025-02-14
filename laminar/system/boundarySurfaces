@@ -1,0 +1,49 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2212                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+
+boundaryPlanes
+{
+    type            surfaces;
+
+    libs            (fieldFunctionObjects sampling);
+
+    writeControl    writeTime;
+
+    executeControl  writeTime;
+
+    fields          (U UMean p pMean T TMean rho rhoMean sMean cSqMean LMean L LPrime entropyGradient entropyMonopole);
+
+    surfaceFormat   foam;
+
+    surfaces
+    {
+        wall
+        {
+            type            patch;
+
+            patches         ("walls");
+
+            interpolate     true;
+
+            surfaceFormat   foam;
+        }
+
+        freestream
+        {
+            type            patch;
+
+            patches         ("freestream");
+
+            interpolate     true;
+
+            surfaceFormat   foam;
+        }
+    }
+}
+
+// ************************************************************************* //
