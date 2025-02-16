@@ -1,6 +1,9 @@
 *.sh
 *.slurm
 *.out
+<<<<<<< HEAD
 APE/*.dat
 APE/Absorption/*dat
 APE/BaseFlow/*dat
+=======
+>>>>>>> eca76197bf63f38610998b335f9d8e77da7bdf7f
