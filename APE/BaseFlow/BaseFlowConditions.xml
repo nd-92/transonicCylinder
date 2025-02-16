@@ -7,6 +7,7 @@
     </EXPANSIONS>
     <CONDITIONS>
         <SOLVERINFO>
+            <I PROPERTY="GlobalSysSoln" VALUE="DirectFull" />
             <I PROPERTY="Projection" VALUE="Continuous" />
         </SOLVERINFO>
         <VARIABLES>
