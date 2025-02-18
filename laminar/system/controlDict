@@ -72,8 +72,8 @@ smoothingScale      1000000.0;
 functions
 {
     // #include "timeAverageFields"
-    // #include "cutPlanes"
-    // #include "boundarySurfaces"
+    #include "cutPlanes"
+    #include "boundarySurfaces"
     #include "probes"
 }
 
