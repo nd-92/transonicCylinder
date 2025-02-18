@@ -65,7 +65,7 @@ cwipiEntropy        true;
 
 cwipiDsDt           true;
 
-smoothenSources     true;
+smoothenSources     false;
 
 smoothingScale      1000000.0;
 
