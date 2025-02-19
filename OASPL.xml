@@ -1,0 +1,6 @@
+<NEKTAR>
+    <FILTER TYPE="Mean">
+        <PARAM NAME="OutputFile"> OASPL </PARAM>
+        <PARAM NAME="OutputFrequency"> 10000 </PARAM>
+    </FILTER>
+</NEKTAR>
